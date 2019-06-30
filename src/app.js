@@ -3,6 +3,7 @@ import RestaurantsList from "./components/restaurants-list";
 import { restaurants } from "./fixtures";
 import "antd/dist/antd.css";
 import OrderForm from "./components/order-form";
+import PropTypes from "prop-types";
 
 export default function App() {
   return (
@@ -13,3 +14,7 @@ export default function App() {
     </div>
   );
 }
+
+App.propTypes = {
+  restaurants: PropTypes.array
+};
