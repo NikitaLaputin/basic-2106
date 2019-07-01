@@ -2,6 +2,7 @@ import React from "react";
 import { Button, List } from "antd";
 import useToggler from "../custom-hooks/use-toggle-open";
 import Review from "./review";
+import Rating from "./rating";
 import PropTypes from "prop-types";
 
 function ReviewList({ reviews }) {
@@ -13,6 +14,7 @@ function ReviewList({ reviews }) {
           <Review review={review} />
         </List.Item>
       ))}
+      <Rating />
     </List>
   );
   return (
