@@ -1,6 +1,4 @@
 import { normalizedReviews } from "../fixtures";
-import { getValuesById } from "../utils";
-import { authorSelector } from "../selectors";
 
 const defaultReviews = normalizedReviews.reduce(
   (acc, item) => ({
