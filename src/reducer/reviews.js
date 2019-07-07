@@ -1,12 +1,7 @@
 import { normalizedReviews } from "../fixtures";
+import { getValuesById } from "../utils";
 
-const defaultReviews = normalizedReviews.reduce(
-  (acc, item) => ({
-    ...acc,
-    [item.id]: item
-  }),
-  {}
-);
+const defaultReviews = getValuesById(normalizedReviews);
 
 export default (reviews = defaultReviews, { type }) => {
   switch (type) {

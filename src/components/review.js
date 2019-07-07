@@ -5,7 +5,6 @@ import { authorSelector, reviewSelector } from "../selectors";
 import { connect } from "react-redux";
 
 function Review({ review, author }) {
-  console.log(review, author);
   return (
     <Comment
       style={{

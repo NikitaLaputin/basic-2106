@@ -8,9 +8,10 @@ import { filtratedRestaurantsSelector } from "../selectors";
 
 function RestaurantsList({ restaurants, toggleOpenItem, isItemOpen }) {
   console.log("---", "rendering restaurant list");
+  console.log(restaurants);
   return (
     <List>
-      {restaurants.map(restaurant => (
+      {Object.values(restaurants).map(restaurant => (
         <Restaurant
           key={restaurant.id}
           restaurant={restaurant}
@@ -24,7 +25,7 @@ function RestaurantsList({ restaurants, toggleOpenItem, isItemOpen }) {
 }
 
 RestaurantsList.propTypes = {
-  restaurants: PropTypes.array.isRequired,
+  restaurants: PropTypes.object.isRequired,
   toggleOpenItem: PropTypes.func.isRequired,
   isItemOpen: PropTypes.func.isRequired
 };
