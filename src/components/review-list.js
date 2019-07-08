@@ -9,7 +9,7 @@ function ReviewList({ reviews }) {
   const body = isOpen && (
     <List>
       {reviews.map(review => (
-        <List.Item key={review.id}>
+        <List.Item key={review}>
           <Review review={review} />
         </List.Item>
       ))}

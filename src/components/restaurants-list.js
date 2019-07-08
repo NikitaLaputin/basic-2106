@@ -8,7 +8,6 @@ import { filtratedRestaurantsSelector } from "../selectors";
 
 function RestaurantsList({ restaurants, toggleOpenItem, isItemOpen }) {
   console.log("---", "rendering restaurant list");
-  console.log(restaurants);
   return (
     <List>
       {Object.values(restaurants).map(restaurant => (

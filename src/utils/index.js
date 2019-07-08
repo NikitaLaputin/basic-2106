@@ -1,5 +1,5 @@
 export function getAverageRate(restaurant) {
-  console.log("restaurant: ", restaurant);
+  //kill it
   return 3;
   // restaurant.reviews
   //   .map(review => review.rating)

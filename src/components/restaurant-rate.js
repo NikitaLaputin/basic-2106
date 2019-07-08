@@ -2,27 +2,31 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Rate, Modal, Form, Input } from "antd";
 import { getAverageRate } from "../utils";
+import { connect } from "react-redux";
+import { addReview } from "../ac";
 
 class RestaurantRate extends Component {
   static propTypes = {
     restaurant: PropTypes.object.isRequired
   };
   state = {
-    rate: getAverageRate(this.props.restaurant),
+    rating: getAverageRate(this.props.restaurant),
+    restaurant: this.props.restaurant.id,
     isVisible: false,
     text: "",
-    author: "Default"
+    name: "Default"
   };
 
   handleComment = e => {
     this.setState({ text: e.target.value });
   };
   handleAuthor = e => {
-    this.setState({ author: e.target.value });
+    this.setState({ name: e.target.value });
   };
 
   handleOk = () => {
     this.setState({ isVisible: false });
+    this.props.submit(this.state);
   };
 
   handleCancel = () => {
@@ -33,9 +37,9 @@ class RestaurantRate extends Component {
     return (
       <>
         <Rate
-          value={this.state.rate}
-          onChange={rate => {
-            this.setState({ rate });
+          value={this.state.rating}
+          onChange={rating => {
+            this.setState({ rating });
             this.setState({ isVisible: true });
           }}
         />
@@ -57,9 +61,9 @@ class RestaurantRate extends Component {
             </Form.Item>
             <Form.Item label="Rate this restaurant">
               <Rate
-                value={this.state.rate}
-                onChange={rate => {
-                  this.setState({ rate });
+                value={this.state.rating}
+                onChange={rating => {
+                  this.setState({ rating });
                 }}
               />
             </Form.Item>
@@ -72,4 +76,9 @@ class RestaurantRate extends Component {
 
 RestaurantRate.propTypes = {};
 
-export default RestaurantRate;
+const mapDispatchToProps = { submit: addReview };
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(RestaurantRate);
