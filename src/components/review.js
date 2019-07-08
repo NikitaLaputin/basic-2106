@@ -1,15 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Comment, Rate } from "antd";
+import { authorSelector, reviewSelector } from "../selectors";
+import { connect } from "react-redux";
 
-function Review({ review }) {
+function Review({ review, author }) {
   return (
     <Comment
       style={{
         margin: "16px",
         backgroundColor: "white"
       }}
-      author={review.user}
+      author={author.name}
       content={review.text}
       actions={[
         <Rate
@@ -30,4 +32,9 @@ Review.propTypes = {
   }).isRequired
 };
 
-export default Review;
+const mapStateToProps = (state, ownProps) => ({
+  review: reviewSelector(state, ownProps.review),
+  author: authorSelector(state, ownProps)
+});
+
+export default connect(mapStateToProps)(Review);

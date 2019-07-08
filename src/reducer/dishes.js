@@ -1,12 +1,7 @@
 import { normalizedDishes } from "../fixtures";
+import { getValuesById } from "../utils";
 
-const defaultDishes = normalizedDishes.reduce(
-  (acc, item) => ({
-    ...acc,
-    [item.id]: item
-  }),
-  {}
-);
+const defaultDishes = getValuesById(normalizedDishes);
 
 export default (dishes = defaultDishes, { type }) => {
   switch (type) {
