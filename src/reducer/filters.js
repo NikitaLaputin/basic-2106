@@ -1,13 +1,12 @@
 import { SET_MIN_RATING } from "../constants";
+import { Map } from "immutable";
 
-const initialState = {
-  minRating: 0
-};
+const initialState = new Map({ minRating: 0 });
 
 export default (filters = initialState, { type, payload }) => {
   switch (type) {
     case SET_MIN_RATING:
-      return { ...filters, minRating: payload.minRating };
+      return filters.set("minRating", payload.minRating);
 
     default:
       return filters;

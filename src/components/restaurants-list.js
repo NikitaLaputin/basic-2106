@@ -2,16 +2,20 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import Restaurant from "./restaurant";
 import accordionDecorator from "../decorators/accordion";
-import { List } from "antd";
+import { List, Skeleton } from "antd";
 import { connect } from "react-redux";
-import { filtratedRestaurantsSelector } from "../selectors";
+import {
+  filtratedRestaurantsSelector,
+  loadingRestaurantsSelector
+} from "../selectors";
 import { loadAllRestaurants } from "../ac";
 
 function RestaurantsList({
   restaurants,
   toggleOpenItem,
   isItemOpen,
-  loadAllRestaurants
+  loadAllRestaurants,
+  loading
 }) {
   useEffect(() => {
     loadAllRestaurants();
@@ -19,14 +23,17 @@ function RestaurantsList({
   console.log("---", "rendering restaurant list");
   return (
     <List>
+      <Skeleton loading={loading} active />
       {restaurants.map(restaurant => (
-        <Restaurant
-          key={restaurant.id}
-          restaurant={restaurant}
-          isOpen={isItemOpen(restaurant.id)}
-          onBtnClick={toggleOpenItem(restaurant.id)}
-          data-id="restaurant"
-        />
+        <>
+          <Restaurant
+            key={restaurant.id}
+            restaurant={restaurant}
+            isOpen={isItemOpen(restaurant.id)}
+            onBtnClick={toggleOpenItem(restaurant.id)}
+            data-id="restaurant"
+          />
+        </>
       ))}
     </List>
   );
@@ -42,7 +49,8 @@ export default connect(
   state => {
     console.log("---", "connect");
     return {
-      restaurants: filtratedRestaurantsSelector(state)
+      restaurants: filtratedRestaurantsSelector(state),
+      loading: loadingRestaurantsSelector(state)
     };
   },
   {
