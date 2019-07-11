@@ -9,7 +9,7 @@ export default (order = new Map(), action) => {
       return order.set(payload.id, (order.get(payload.id) || 0) + 1);
 
     case REMOVE_ITEM:
-      return order.set(payload.id, Math.max(order.getpayload.id || 0) - 1, 0);
+      return order.set(payload.id, Math.max(order.get(payload.id) || 0) - 1, 0);
 
     default:
       return order;

@@ -1,15 +1,41 @@
-import { normalizedReviews } from "../fixtures";
+import { fromJS, Map } from "immutable";
 import { arrToMap } from "../utils";
-import { ADD_REVIEW } from "../constants";
+import {
+  ADD_REVIEW,
+  ERROR,
+  LOAD_ALL_REVIEWS,
+  START,
+  SUCCESS
+} from "../constants";
 
-const defaultReviews = arrToMap(normalizedReviews);
+const defaultState = new Map({
+  entities: fromJS(arrToMap([])),
+  loading: false,
+  error: null
+});
 
-export default (reviews = defaultReviews, { type, payload, id }) => {
+export default (
+  state = defaultState,
+  { type, payload, id, response, error }
+) => {
   switch (type) {
     case ADD_REVIEW:
-      return { ...reviews, [id]: { ...payload.review, id } };
+      return state.update("entities", reviews =>
+        reviews.push(new Map({ id, payload }))
+      );
+
+    case LOAD_ALL_REVIEWS + START:
+      return state.set("loading", true);
+
+    case LOAD_ALL_REVIEWS + ERROR:
+      return state.set("loading", false).set("error", error);
+
+    case LOAD_ALL_REVIEWS + SUCCESS:
+      return state
+        .set("loading", false)
+        .set("entities", fromJS(arrToMap(response)));
 
     default:
-      return reviews;
+      return state;
   }
 };

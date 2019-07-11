@@ -6,11 +6,12 @@ import { addItem, removeItem } from "../ac";
 import { dishSelector } from "../selectors";
 
 function Dish({ dish, amount, handleDecrease, handleIncrease }) {
+  console.log("DISH", dish);
   return (
     <Card
       bordered
       actions={[
-        `$${dish.price}`,
+        `$${dish.get("price")}`,
         <>
           <span style={{ margin: "0 12px" }} data-id="dish-amount">
             {amount}
@@ -21,20 +22,23 @@ function Dish({ dish, amount, handleDecrease, handleIncrease }) {
               shape="circle"
               icon="minus"
               data-id="dish-minus"
-              onClick={() => handleDecrease(dish.id)}
+              onClick={() => handleDecrease(dish.get("id"))}
             />
             <Button
               type="primary"
               shape="circle"
               icon="plus"
               data-id="dish-plus"
-              onClick={() => handleIncrease(dish.id)}
+              onClick={() => handleIncrease(dish.get("id"))}
             />
           </Button.Group>
         </>
       ]}
     >
-      <Card.Meta title={dish.name} description={dish.ingredients.join(", ")} />
+      <Card.Meta
+        title={dish.get("name")}
+        description={dish.get("ingredients").join(", ")}
+      />
     </Card>
   );
 }
@@ -49,10 +53,13 @@ Dish.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
-const mapStateToProps = (state, ownProps) => ({
-  amount: state.order[ownProps.id] || 0,
-  dish: dishSelector(state, ownProps)
-});
+const mapStateToProps = (state, ownProps) => {
+  // console.log('DISH', ownProps)
+  return {
+    amount: state.order.get(ownProps.id) || 0,
+    dish: dishSelector(state, ownProps.id)
+  };
+};
 
 const mapDispatchToProps = {
   handleIncrease: addItem,

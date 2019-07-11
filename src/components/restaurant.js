@@ -9,7 +9,7 @@ import RestaurantRate from "./restaurant-rate";
 export default function Restaurant({ restaurant, isOpen, onBtnClick }) {
   const body = isOpen && (
     <div data-id="restaurant-body">
-      <RestaurantMenu menu={restaurant.menu} />
+      <RestaurantMenu restaurant={restaurant.get("id")} />
       <ReviewList restaurant={restaurant} />
       <RestaurantMap />
     </div>
@@ -24,8 +24,8 @@ export default function Restaurant({ restaurant, isOpen, onBtnClick }) {
       ]}
     >
       <List.Item.Meta
-        avatar={<Avatar shape="square" src={restaurant.image} />}
-        title={restaurant.name}
+        avatar={<Avatar shape="square" src={restaurant.get("image")} />}
+        title={restaurant.get("name")}
       />
       <RestaurantRate restaurant={restaurant} />
       {body}

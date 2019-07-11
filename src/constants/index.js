@@ -9,6 +9,9 @@ export const SET_MIN_RATING = "SET_MIN_RATING";
 export const ADD_REVIEW = "ADD_REVIEW";
 
 export const LOAD_ALL_RESTAURANTS = "LOAD_ALL_RESTAURANTS";
+export const LOAD_ALL_REVIEWS = "LOAD_ALL_REVIEWS";
+export const LOAD_DISHES = "LOAD_DISHES";
+export const LOAD_ALL_USERS = "LOAD_ALL_USERS";
 
 export const START = "_START";
 export const SUCCESS = "_SUCCESS";

@@ -19,21 +19,20 @@ function RestaurantsList({
 }) {
   useEffect(() => {
     loadAllRestaurants();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   console.log("---", "rendering restaurant list");
   return (
     <List>
       <Skeleton loading={loading} active />
       {restaurants.map(restaurant => (
-        <>
-          <Restaurant
-            key={restaurant.id}
-            restaurant={restaurant}
-            isOpen={isItemOpen(restaurant.id)}
-            onBtnClick={toggleOpenItem(restaurant.id)}
-            data-id="restaurant"
-          />
-        </>
+        <Restaurant
+          key={restaurant.get("id")}
+          restaurant={restaurant}
+          isOpen={isItemOpen(restaurant.get("id"))}
+          onBtnClick={toggleOpenItem(restaurant.get("id"))}
+          data-id="restaurant"
+        />
       ))}
     </List>
   );

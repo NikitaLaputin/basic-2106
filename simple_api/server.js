@@ -15,7 +15,6 @@ app.use("/api", api);
 
 app.listen(port, "localhost", function(err) {
   if (err) {
-    console.log(err);
     return;
   }
 
