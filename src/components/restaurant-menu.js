@@ -7,6 +7,7 @@ import { loadDishes } from "../ac";
 
 function RestaurantMenu({ restaurant, menu, loadDishes, loading }) {
   useEffect(() => {
+    console.log("HI");
     loadDishes(restaurant);
   }, []);
   console.log("MENU", menu);

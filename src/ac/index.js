@@ -10,6 +10,7 @@ import {
   START,
   SUCCESS,
   LOAD_ALL_REVIEWS,
+  LOAD_ALL_DISHES,
   LOAD_DISHES,
   LOAD_ALL_USERS
 } from "../constants";
@@ -84,6 +85,19 @@ export const loadDishes = restaurant => async dispatch => {
     const response = await rawRes.json();
 
     dispatch({ type: LOAD_DISHES + SUCCESS, response, restaurant });
+  } catch (error) {
+    dispatch({ type: LOAD_DISHES + ERROR, error });
+  }
+};
+
+export const loadAllDishes = () => async dispatch => {
+  try {
+    dispatch({ type: LOAD_DISHES + START });
+
+    const rawRes = await fetch(`/api/dishes`);
+    const response = await rawRes.json();
+
+    dispatch({ type: LOAD_DISHES + SUCCESS, response });
   } catch (error) {
     dispatch({ type: LOAD_DISHES + ERROR, error });
   }

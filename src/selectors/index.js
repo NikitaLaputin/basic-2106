@@ -7,7 +7,7 @@ export const loadingDishesSelector = state => state.dishes.get("loading");
 const filtersSelector = state => state.filters;
 export const reviewsSelector = state => state.reviews.get("entities");
 export const dishesSelector = (state, restaurant) =>
-  state.dishes.get(restaurant).get("entities");
+  state.dishes.get("entities").get(restaurant);
 export const dishSelector = (state, id, restaurant) => {
   console.log(state, id);
   return state.dishes
