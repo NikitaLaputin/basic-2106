@@ -7,13 +7,16 @@ export const loadingDishesSelector = state => state.dishes.get("loading");
 const filtersSelector = state => state.filters;
 export const reviewsSelector = state => state.reviews.get("entities");
 export const dishesSelector = (state, restaurant) =>
-  state.dishes.get("entities").get(restaurant);
-export const dishSelector = (state, id, restaurant) => {
+  state.dishes.get("entities");
+export const dishesFromRestaurantSelector = (state, restaurant) => {
+  console.log("DISHES", state.dishes, restaurant);
+  return [...state.dishes.get("entities").values()].filter(
+    dish => dish.get("restaurant") === restaurant
+  );
+};
+export const dishSelector = (state, id) => {
   console.log(state, id);
-  return state.dishes
-    .get("entities")
-    .get(restaurant)
-    .get(id);
+  return state.dishes.get("entities").get(id);
 };
 export const reviewSelector = (state, id) => state.get(id);
 

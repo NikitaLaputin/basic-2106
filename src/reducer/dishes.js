@@ -14,6 +14,7 @@ export default (
 ) => {
   switch (type) {
     case LOAD_DISHES + START:
+      console.log("DISH_STATE", state);
       return state.set("loading", true);
 
     case LOAD_DISHES + ERROR:
@@ -22,7 +23,11 @@ export default (
     case LOAD_DISHES + SUCCESS:
       return state
         .set("loading", false)
-        .setIn(["entities", restaurant], fromJS(arrToMap(response)));
+        .mergeDeep(
+          fromJS({
+            entities: arrToMap(response.map(dish => ({ ...dish, restaurant })))
+          })
+        );
 
     default:
       return state;

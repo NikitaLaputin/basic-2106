@@ -6,7 +6,6 @@ import Review from "./review";
 import ReviewForm from "./review-form";
 
 function ReviewList({ restaurant }) {
-  console.log(restaurant);
   const { isOpen, toggleOpen } = useToggler();
   const body = isOpen && (
     <div>

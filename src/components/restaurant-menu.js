@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import Dish from "./dish";
 import { Row, Col, Skeleton } from "antd";
 import { connect } from "react-redux";
-import { dishesSelector, loadingDishesSelector } from "./../selectors/index";
+import {
+  dishesFromRestaurantSelector,
+  loadingDishesSelector
+} from "./../selectors/index";
 import { loadDishes } from "../ac";
 
 function RestaurantMenu({ restaurant, menu, loadDishes, loading }) {
   useEffect(() => {
-    console.log("HI");
     loadDishes(restaurant);
   }, []);
   console.log("MENU", menu);
@@ -15,9 +17,9 @@ function RestaurantMenu({ restaurant, menu, loadDishes, loading }) {
     <div style={{ padding: "16px" }}>
       <Skeleton loading={loading} active />
       <Row gutter={16}>
-        {[...menu.keys()].map(id => (
-          <Col key={id} span={8}>
-            <Dish id={id} />
+        {menu.map(dish => (
+          <Col key={dish.get("id")} span={8}>
+            <Dish id={dish.get("id")} restaurant={dish.get("restaurant")} />
           </Col>
         ))}
       </Row>
@@ -26,8 +28,8 @@ function RestaurantMenu({ restaurant, menu, loadDishes, loading }) {
 }
 
 export default connect(
-  (state, ownProps) => ({
-    menu: dishesSelector(state, ownProps.restaurant),
+  (state, ownState) => ({
+    menu: dishesFromRestaurantSelector(state, ownState.restaurant),
     loading: loadingDishesSelector(state)
   }),
   {
