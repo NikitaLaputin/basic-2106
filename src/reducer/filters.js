@@ -1,9 +1,11 @@
+import { Record } from "immutable";
 import { SET_MIN_RATING } from "../constants";
-import { Map } from "immutable";
 
-const initialState = new Map({ minRating: 0 });
+const ReducerState = Record({
+  minRating: 0
+});
 
-export default (filters = initialState, { type, payload }) => {
+export default (filters = new ReducerState(), { type, payload }) => {
   switch (type) {
     case SET_MIN_RATING:
       return filters.set("minRating", payload.minRating);

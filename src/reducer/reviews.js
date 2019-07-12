@@ -1,41 +1,39 @@
-import { fromJS, Map } from "immutable";
 import { arrToMap } from "../utils";
-import {
-  ADD_REVIEW,
-  ERROR,
-  LOAD_ALL_REVIEWS,
-  START,
-  SUCCESS
-} from "../constants";
+import { ADD_REVIEW, LOAD_ALL_REVIEWS, START, SUCCESS } from "../constants";
+import { Record } from "immutable";
 
-const defaultState = new Map({
-  entities: fromJS(arrToMap([])),
-  loading: false,
-  error: null
+const ReviewRecord = Record({
+  id: null,
+  userId: null,
+  text: null,
+  rating: null
+});
+
+const ReducerRecord = Record({
+  entities: arrToMap([], ReviewRecord),
+  loading: false
 });
 
 export default (
-  state = defaultState,
-  { type, payload, id, response, error }
+  reviewState = new ReducerRecord(),
+  { type, payload, response, id }
 ) => {
   switch (type) {
     case ADD_REVIEW:
-      return state.update("entities", reviews =>
-        reviews.push(new Map({ id, payload }))
+      return reviewState.setIn(
+        ["entities", id],
+        new ReviewRecord({ ...payload.review, id })
       );
 
     case LOAD_ALL_REVIEWS + START:
-      return state.set("loading", true);
-
-    case LOAD_ALL_REVIEWS + ERROR:
-      return state.set("loading", false).set("error", error);
+      return reviewState.set("loading", true);
 
     case LOAD_ALL_REVIEWS + SUCCESS:
-      return state
-        .set("loading", false)
-        .set("entities", fromJS(arrToMap(response)));
+      return reviewState
+        .set("entities", arrToMap(response, ReviewRecord))
+        .set("loading", false);
 
     default:
-      return state;
+      return reviewState;
   }
 };

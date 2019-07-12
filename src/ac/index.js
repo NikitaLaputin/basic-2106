@@ -5,13 +5,12 @@ import {
   ERROR,
   INCREMENT,
   LOAD_ALL_RESTAURANTS,
+  LOAD_ALL_REVIEWS,
+  LOAD_MENU,
   REMOVE_ITEM,
   SET_MIN_RATING,
   START,
-  SUCCESS,
-  LOAD_ALL_REVIEWS,
-  LOAD_DISHES,
-  LOAD_ALL_USERS
+  SUCCESS
 } from "../constants";
 
 export const increment = () => ({
@@ -56,48 +55,20 @@ export const loadAllRestaurants = () => async dispatch => {
 
     const rawRes = await fetch("/api/restaurants");
     const response = await rawRes.json();
-    await dispatch(loadAllReiews());
 
     dispatch({ type: LOAD_ALL_RESTAURANTS + SUCCESS, response });
   } catch (error) {
     dispatch({ type: LOAD_ALL_RESTAURANTS + ERROR, error });
   }
 };
-export const loadAllReiews = () => async dispatch => {
-  try {
-    dispatch({ type: LOAD_ALL_REVIEWS + START });
 
-    const rawRes = await fetch("/api/reviews");
-    const response = await rawRes.json();
+export const loadAllReviews = () => ({
+  type: LOAD_ALL_REVIEWS,
+  callAPI: "/api/reviews"
+});
 
-    dispatch({ type: LOAD_ALL_REVIEWS + SUCCESS, response });
-  } catch (error) {
-    dispatch({ type: LOAD_ALL_REVIEWS + ERROR, error });
-  }
-};
-
-export const loadDishes = restaurant => async dispatch => {
-  try {
-    dispatch({ type: LOAD_DISHES + START });
-
-    const rawRes = await fetch(`/api/dishes?id=${restaurant}`);
-    const response = await rawRes.json();
-
-    dispatch({ type: LOAD_DISHES + SUCCESS, response, restaurant });
-  } catch (error) {
-    dispatch({ type: LOAD_DISHES + ERROR, error });
-  }
-};
-
-export const loadAllUsers = () => async dispatch => {
-  try {
-    dispatch({ type: LOAD_ALL_USERS + START });
-
-    const rawRes = await fetch("/api/users");
-    const response = await rawRes.json();
-
-    dispatch({ type: LOAD_ALL_USERS + SUCCESS, response });
-  } catch (error) {
-    dispatch({ type: LOAD_ALL_USERS + ERROR, error });
-  }
-};
+export const loadMenu = restaurantId => ({
+  type: LOAD_MENU,
+  payload: { restaurantId },
+  callAPI: `/api/dishes?id=${restaurantId}`
+});

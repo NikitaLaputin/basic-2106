@@ -53,13 +53,10 @@ Dish.propTypes = {
   ingredients: PropTypes.arrayOf(PropTypes.string).isRequired
 };
 
-const mapStateToProps = (state, ownProps) => {
-  // console.log('DISH', ownProps)
-  return {
-    amount: state.order.get(ownProps.id) || 0,
-    dish: dishSelector(state, ownProps.id)
-  };
-};
+const mapStateToProps = (state, ownProps) => ({
+  amount: state.order.get(ownProps.id) || 0,
+  dish: dishSelector(state, ownProps)
+});
 
 const mapDispatchToProps = {
   handleIncrease: addItem,

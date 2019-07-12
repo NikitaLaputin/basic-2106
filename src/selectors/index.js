@@ -1,28 +1,31 @@
 import { createSelector } from "reselect";
 
 const restaurantsSelector = state => state.restaurants.get("entities");
-export const loadingRestaurantsSelector = state =>
-  state.restaurants.get("loading");
-export const loadingDishesSelector = state => state.dishes.get("loading");
 const filtersSelector = state => state.filters;
-export const reviewsSelector = state => state.reviews.get("entities");
-export const dishesSelector = (state, restaurant) =>
-  state.dishes.get(restaurant).get("entities");
-export const dishSelector = (state, id, restaurant) => {
-  console.log(state, id);
-  return state.dishes
-    .get("entities")
-    .get(restaurant)
-    .get(id);
-};
-export const reviewSelector = (state, id) => state.get(id);
+const reviewsSelector = state => state.reviews;
+export const dishSelector = (state, { id }) =>
+  state.dishes.getIn(["entities", id]);
+export const reviewSelector = (state, { id }) =>
+  state.reviews.getIn(["entities", id]);
+
+export const restaurantsLoading = state =>
+  state.restaurants.loading || state.reviews.loading;
+
+export const menuLoadingSelector = (state, { restaurant }) =>
+  state.dishes.loading.get(restaurant.id);
+
+export const menuLoadedSelector = (state, { restaurant }) =>
+  state.dishes.loaded.get(restaurant.id);
 
 export const totalAmountSelector = state =>
-  [...state.order.values()].reduce((acc, amount) => acc + amount, 0);
+  state.order.valueSeq().reduce((acc, amount) => acc + amount, 0);
+
+export const restaurantSelector = (state, { id }) =>
+  state.restaurants.getIn(["entities", id]);
 
 export const totalPriceSelector = state =>
-  [...state.order.entries()].reduce(
-    (acc, [id, amount]) => acc + dishSelector(state, id).get("price") * amount,
+  state.order.reduce(
+    (acc, amount, id) => acc + dishSelector(state, { id }).price * amount,
     0
   );
 
@@ -31,17 +34,18 @@ export const filtratedRestaurantsSelector = createSelector(
   filtersSelector,
   reviewsSelector,
   (restaurants, filters, reviews) =>
-    [...restaurants.values()].filter(
-      restaurant =>
-        avarageRateSelector(reviews, { restaurant }) >= filters.get("minRating")
-    )
+    restaurants
+      .valueSeq()
+      .toArray()
+      .filter(
+        restaurant =>
+          avarageRateSelector({ reviews }, { restaurant }) >= filters.minRating
+      )
 );
 
-export const avarageRateSelector = (state, { restaurant }) => {
-  return [...restaurant.get("reviews").values()]
-    .map(id => {
-      return reviewSelector(state, id).get("rating");
-    })
+export const avarageRateSelector = (state, { restaurant }) =>
+  restaurant.reviews
+    .map(id => reviewSelector(state, { id }))
+    .map(review => review && review.rating)
     .filter(rate => typeof rate !== "undefined")
     .reduce((acc, el, _, arr) => acc + el / arr.length, 0);
-};
