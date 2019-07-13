@@ -1,30 +1,34 @@
-import { fromJS, Map } from "immutable";
+import { Record, Set } from "immutable";
+import { normalizedDishes } from "../fixtures";
 import { arrToMap } from "../utils";
-import { ERROR, LOAD_DISHES, START, SUCCESS } from "../constants";
+import { LOAD_MENU, START, SUCCESS } from "../constants";
 
-const defaultState = new Map({
-  entities: fromJS(arrToMap([])),
-  loading: false,
-  error: null
+const DishRecord = Record({
+  id: null,
+  name: null,
+  price: null,
+  ingredients: []
 });
 
-export default (
-  state = defaultState,
-  { type, restaurant, response, error }
-) => {
+const ReducerRecord = Record({
+  entities: arrToMap(normalizedDishes, DishRecord),
+  loading: new Set(),
+  loaded: new Set()
+});
+
+export default (dishesState = new ReducerRecord(), { type, payload }) => {
   switch (type) {
-    case LOAD_DISHES + START:
-      return state.set("loading", true);
+    case LOAD_MENU + START:
+      return dishesState.updateIn(["loading"], loading =>
+        loading.add(payload.restaurantId)
+      );
 
-    case LOAD_DISHES + ERROR:
-      return state.set("loading", false).set("error", error);
-
-    case LOAD_DISHES + SUCCESS:
-      return state
-        .set("loading", false)
-        .setIn(["entities", restaurant], fromJS(arrToMap(response)));
+    case LOAD_MENU + SUCCESS:
+      return dishesState
+        .updateIn(["loading"], loading => loading.remove(payload.restaurantId))
+        .updateIn(["loaded"], loading => loading.add(payload.restaurantId));
 
     default:
-      return state;
+      return dishesState;
   }
 };
