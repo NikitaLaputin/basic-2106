@@ -29,6 +29,17 @@ export const totalPriceSelector = state =>
     0
   );
 
+const dishRestaurantSelector = (state, dishId) =>
+  restaurantsSelector(state).find(restaurant =>
+    restaurant.menu.includes(dishId)
+  ).id;
+
+export const orderSelector = state =>
+  [...state.order.keys()].map(dish => ({
+    id: dish,
+    restaurant: dishRestaurantSelector(state, dish)
+  }));
+
 export const filtratedRestaurantsSelector = createSelector(
   restaurantsSelector,
   filtersSelector,
