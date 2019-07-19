@@ -10,12 +10,16 @@ import { Provider } from "./contexts/username";
 import { useInputValue } from "./custom-hooks/use-input-value";
 import { Input } from "antd";
 import Menu, { MenuItem } from "./components/menu";
+import LocaleSelector from "./components/language-picker";
+import { LocaleConsumer, LocaleProvider } from "./contexts/locale";
 
 export default function App() {
   const [username, setUserName] = useInputValue("Roma");
 
   return (
-    <div>
+    <LocaleProvider value="en_GB">
+      <LocaleConsumer>{locale => <h2>{locale}</h2>}</LocaleConsumer>
+      <LocaleSelector />
       <Menu>
         <Menu.Item to="/checkout">
           <Cart />
@@ -40,6 +44,6 @@ export default function App() {
           <Route path="*" render={() => <h1>Not Found Page</h1>} />
         </Switch>
       </Provider>
-    </div>
+    </LocaleProvider>
   );
 }
