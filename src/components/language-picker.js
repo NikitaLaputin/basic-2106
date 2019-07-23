@@ -1,16 +1,22 @@
 import React from "react";
 import { Select } from "antd";
-import { useInputValue } from "./../custom-hooks/use-input-value";
-import { localeContext } from "./../contexts/locale";
-import { useState } from "react";
+import { LocaleConsumer } from "./../contexts/locale";
 const { Option } = Select;
 
 export default function() {
-  const [locale, setLocale] = useState("en_GB");
   return (
-    <Select defaultValue="English" onChange={setLocale}>
-      <Option value="en_GB">English</Option>
-      <Option value="ru_RU">Русский</Option>
-    </Select>
+    <LocaleConsumer>
+      {({ locale, dictionary, localeSeletion }) => (
+        <>
+          <span style={{ padding: 10 }}>
+            {dictionary[locale].selectLanguage}
+          </span>
+          <Select defaultValue="English" onChange={localeSeletion}>
+            <Option value="en_GB">English</Option>
+            <Option value="ru_RU">Русский</Option>
+          </Select>
+        </>
+      )}
+    </LocaleConsumer>
   );
 }

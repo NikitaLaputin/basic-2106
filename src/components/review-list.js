@@ -4,8 +4,9 @@ import { Button, List } from "antd";
 import useToggler from "../custom-hooks/use-toggle-open";
 import Review from "./review";
 import ReviewForm from "./review-form";
+import { withLocale } from "./wrappers/locale-wrapper";
 
-function ReviewList({ restaurant }) {
+function ReviewList({ restaurant, locale, dictionary }) {
   console.log(restaurant);
   const { isOpen, toggleOpen } = useToggler();
   const body = isOpen && (
@@ -25,7 +26,9 @@ function ReviewList({ restaurant }) {
     <div>
       {body}
       <Button onClick={toggleOpen}>
-        {isOpen ? "hide reviews" : "show reviews"}
+        {isOpen
+          ? dictionary[locale].hideReviews
+          : dictionary[locale].showReviews}
       </Button>
     </div>
   );
@@ -35,4 +38,4 @@ ReviewList.propTypes = {
   restaurant: PropTypes.object.isRequired
 };
 
-export default ReviewList;
+export default withLocale(ReviewList);
