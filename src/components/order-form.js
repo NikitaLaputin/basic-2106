@@ -1,8 +1,9 @@
 import React from "react";
 import { Button, Input } from "antd";
 import { useInputValue } from "../custom-hooks/use-input-value";
+import { withLocale } from "./wrappers/locale-wrapper";
 
-export default function OrderForm() {
+function OrderForm({ dictionary, locale }) {
   const [name, setName] = useInputValue();
   const [address, setAddress] = useInputValue();
   const [telephone, setTelephone] = useInputValue();
@@ -15,12 +16,16 @@ export default function OrderForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      Name: <Input value={name} onChange={setName} />
-      Tel: <Input value={telephone} onChange={setTelephone} />
-      Address: <Input.TextArea value={address} onChange={setAddress} />
+      {dictionary[locale].name}: <Input value={name} onChange={setName} />
+      {dictionary[locale].tel}:{" "}
+      <Input value={telephone} onChange={setTelephone} />
+      {dictionary[locale].address}:{" "}
+      <Input.TextArea value={address} onChange={setAddress} />
       <Button type="primary" htmlType="submit">
-        Order
+        {dictionary[locale].order}
       </Button>
     </form>
   );
 }
+
+export default withLocale(OrderForm);

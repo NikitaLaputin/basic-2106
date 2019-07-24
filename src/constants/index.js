@@ -18,3 +18,46 @@ export const LOAD_MENU = "LOAD_MENU";
 export const START = "_START";
 export const SUCCESS = "_SUCCESS";
 export const ERROR = "_ERROR";
+
+export const dictionary = {
+  en_GB: {
+    restaurants: "Restautrants",
+    selectLanguage: "Select language",
+    filter: "Filter",
+    notFound: "Not Found Page",
+    addReview: "Add a review for",
+    username: "Username",
+    total: "total",
+    items: "items from",
+    order: "Order now",
+    pleaseSelect: "Please select a restaurant",
+    showReviews: "show reviews",
+    hideReviews: "hide reviews",
+    all: "all",
+    name: "Name",
+    tel: "Tel",
+    address: "Address",
+    text: "Text",
+    submit: "Submit review"
+  },
+  ru_RU: {
+    restaurants: "Рестораны",
+    selectLanguage: "Выберите язык",
+    filter: "Фильтр",
+    notFound: "Страница не найдена",
+    addReview: "Добавить отзыв для",
+    username: "Имя пользователя",
+    total: "всего",
+    items: "предметов от",
+    order: "Заказать",
+    pleaseSelect: "Пожалуйста, выберите ресторан",
+    showReviews: "показать отзывы",
+    hideReviews: "скрыть отзывы",
+    all: "все",
+    name: "Имя",
+    tel: "Тел",
+    address: "Адрес",
+    text: "Текст",
+    submit: "Отправить отзыв"
+  }
+};

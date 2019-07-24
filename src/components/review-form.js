@@ -3,8 +3,9 @@ import { Button, Input, Rate } from "antd";
 import { useInputValue } from "../custom-hooks/use-input-value";
 import { connect } from "react-redux";
 import { addReview } from "../ac";
+import { withLocale } from "./wrappers/locale-wrapper";
 
-function ReviewForm({ submitReview }) {
+function ReviewForm({ submitReview, dictionary, locale }) {
   const [text, setText] = useInputValue();
   const [rating, setRating] = useState();
 
@@ -15,10 +16,10 @@ function ReviewForm({ submitReview }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      Text: <Input value={text} onChange={setText} />
+      {dictionary[locale].text}: <Input value={text} onChange={setText} />
       <Rate onChange={setRating} value={rating} />
       <Button type="primary" htmlType="submit">
-        Submit Review
+        {dictionary[locale].submit}
       </Button>
     </form>
   );
@@ -29,4 +30,4 @@ export default connect(
   (dispatch, { restaurantId }) => ({
     submitReview: review => dispatch(addReview(review, restaurantId))
   })
-)(ReviewForm);
+)(withLocale(ReviewForm));
