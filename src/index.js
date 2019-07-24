@@ -5,7 +5,6 @@ import { ConnectedRouter } from "connected-react-router";
 import App from "./app";
 import store from "./store";
 import history from "./history";
-import { LocaleProvider } from "./contexts/locale";
 
 ReactDOM.render(
   <Provider store={store}>

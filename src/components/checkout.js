@@ -3,22 +3,18 @@ import { connect } from "react-redux";
 import { orderListSelector } from "../selectors";
 import { Button, List } from "antd";
 import CartItem from "./cart-item";
-import { LocaleConsumer } from "../contexts/locale";
+import { withLocale } from "./wrappers/locale-wrapper";
 
-function Checkout({ orderList }) {
+function Checkout({ orderList, dictionary, locale }) {
   debugger;
   return (
-    <LocaleConsumer>
-      {({ locale, dictionary }) => (
-        <div>
-          <List
-            dataSource={orderList}
-            renderItem={cartItem => <CartItem item={cartItem} />}
-          />
-          <Button type="primary">{dictionary[locale].order}</Button>
-        </div>
-      )}
-    </LocaleConsumer>
+    <div>
+      <List
+        dataSource={orderList}
+        renderItem={cartItem => <CartItem item={cartItem} />}
+      />
+      <Button type="primary">{dictionary[locale].order}</Button>
+    </div>
   );
 }
 
@@ -26,4 +22,4 @@ Checkout.propTypes = {};
 
 export default connect(state => ({
   orderList: orderListSelector(state)
-}))(Checkout);
+}))(withLocale(Checkout));

@@ -31,7 +31,7 @@ export default function App() {
         <MenuItem to="/filter" children={dictionary[locale].filter} />
       </Menu>
       <div>
-        {`${dictionary[locale].username}`}{" "}
+        {`${dictionary[locale].username}`}
         <Input value={username} onChange={setUserName} />
       </div>
       <Provider value={username}>

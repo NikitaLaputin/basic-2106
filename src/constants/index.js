@@ -32,7 +32,13 @@ export const dictionary = {
     order: "Order now",
     pleaseSelect: "Please select a restaurant",
     showReviews: "show reviews",
-    hideReviews: "hide reviews"
+    hideReviews: "hide reviews",
+    all: "all",
+    name: "Name",
+    tel: "Tel",
+    address: "Address",
+    text: "Text",
+    submit: "Submit review"
   },
   ru_RU: {
     restaurants: "Рестораны",
@@ -46,6 +52,12 @@ export const dictionary = {
     order: "Заказать",
     pleaseSelect: "Пожалуйста, выберите ресторан",
     showReviews: "показать отзывы",
-    hideReviews: "скрыть отзывы"
+    hideReviews: "скрыть отзывы",
+    all: "все",
+    name: "Имя",
+    tel: "Тел",
+    address: "Адрес",
+    text: "Текст",
+    submit: "Отправить отзыв"
   }
 };
